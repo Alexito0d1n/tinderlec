@@ -9,23 +9,21 @@ const SignUp = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  // Expresión regular para validar el correo de alumnos UPM
+  //regex @alumnos.upm.es
   const emailRegex = /^[a-zA-Z0-9._%+-]+@alumnos\.upm\.es$/;
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
-    // Validar el formato del correo electrónico
     if (!emailRegex.test(email)) {
       setError('El correo debe tener el formato *******@alumnos.upm.es');
       return;
     }
 
-    // Cifrar la contraseña
+    //hashing
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    // Insertar el nuevo usuario en la tabla de Supabase
+    //insertar en la base de datos
     const { error } = await supabase
       .from('users')
       .insert([{ email, password: hashedPassword, instagram }]);

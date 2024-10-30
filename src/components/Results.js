@@ -24,11 +24,9 @@ const Results = ({ userId }) => {
         };
 
         const fetchQuestionAndOptionTexts = async (responses) => {
-            // Obtener los IDs únicos de preguntas y opciones
+            //preguntas y opciones de cada pregunta
             const questionIds = [...new Set(responses.map((response) => response.question_id))];
             const optionIds = responses.map((response) => response.selected_option_id);
-
-            // Obtener textos de preguntas
             const { data: questions, error: questionsError } = await supabase
                 .from('questions')
                 .select('id, question')
@@ -44,7 +42,7 @@ const Results = ({ userId }) => {
                 setQuestionTexts(questionTexts);
             }
 
-            // Obtener textos de opciones
+            //textos de opciones
             const { data: options, error: optionsError } = await supabase
                 .from('options')
                 .select('id, text')
@@ -69,7 +67,7 @@ const Results = ({ userId }) => {
     
         setLoading(true);
     
-        // Obtener las respuestas del usuario para hacer la búsqueda
+        //consultar coincidencia
         const selectedOptionIds = testResults.map(result => result.selected_option_id);
     
         const { data: matchingUsersData, error } = await supabase
@@ -80,7 +78,7 @@ const Results = ({ userId }) => {
         if (error) {
             console.error('Error buscando coincidencias:', error);
         } else {
-            // Filtrar usuarios duplicados por `user_id` y que no sea el usuario actual
+            //elimiar usuario propio de la lista
             const uniqueUsers = Array.from(new Set(matchingUsersData
                 .filter(user => user.user_id !== userId)
                 .map(user => user.user_id))) // Crear una lista de `user_id` únicos

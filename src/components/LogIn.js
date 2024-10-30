@@ -11,7 +11,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     setError('');
 
-    // Buscar el usuario por su correo electrónico
+    //fetch base de datos
     const { data: userData, error: userError } = await supabase
       .from('users')
       .select('id, password, instagram')
@@ -24,7 +24,7 @@ const Login = ({ onLogin }) => {
       const validPassword = bcrypt.compareSync(password, userData.password);
 
       if (validPassword) {
-        // Si la contraseña es válida, iniciar sesión
+        //console log del inicio de sesion
         console.log('Inicio de sesión exitoso:', userData);
         onLogin({ id: userData.id, instagram: userData.instagram });
       } else {

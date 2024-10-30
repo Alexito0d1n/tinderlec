@@ -27,7 +27,7 @@ const Form = ({ userId }) => {
 
       setQuestions(data);
 
-      // Verificar si el usuario ya respondió
+      //usuario ha respondido
       const { data: responses } = await supabase
         .from('responses')
         .select('id')
@@ -56,7 +56,7 @@ const Form = ({ userId }) => {
       setError('Por favor, responde todas las preguntas.');
       return;
     }
-
+//guardar respuestas
     const responsesToInsert = Object.entries(answers).map(([questionId, selectedOptionId]) => ({
       user_id: userId,
       question_id: parseInt(questionId),

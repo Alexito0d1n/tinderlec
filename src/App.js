@@ -25,7 +25,6 @@ function App() {
       console.error('Error al obtener las respuestas:', error);
     } else {
       if (data && data.length > 0) {
-        // Guardamos las respuestas y mostramos los resultados, sin permitir más envíos
         setTestResults(data);
       }
     }
